@@ -2,7 +2,7 @@
 FROM centos:7
 MAINTAINER vasakris
 RUN yum -y update
-RUN yum -y install httpd php php-gd
+RUN yum -y install httpd php php-gd php-mysql
 ADD code /var/www/html
 EXPOSE 80
 ENV BACKENDLB=test

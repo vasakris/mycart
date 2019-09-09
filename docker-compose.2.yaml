@@ -1,0 +1,35 @@
+---
+version: "3.7"
+services:
+  mycart-frontend:
+    build:
+      context: ./frontend
+    image: vasakris/mycart-frontend:6.0
+    depends_on:
+      - mycart-backend
+    environment:
+      BACKENDLB: mycart-backend
+    ports:
+      - "9000:80"
+    volumes:
+      - type: volume
+        source: mycart-frontend-varlog
+        target: /var/log
+  mycart-backend:
+    build:
+      context: ./backend
+    image: vasakris/mycart-backend:6.0
+    volumes:
+      - type: volume
+        source: mycart-backend-varlog
+        target: /var/log
+  mycart-db:
+    image: mysql:5.7
+    volumes:
+      - type: volume
+        source: mycart-db-vol
+        target: /var/lib/mysql
+volumes:
+  mycart-frontend-varlog:
+  mycart-backend-varlog:
+  mycart-db-vol:
